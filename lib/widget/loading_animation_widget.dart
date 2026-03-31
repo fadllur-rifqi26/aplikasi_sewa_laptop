@@ -27,19 +27,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Sesuaikan warna background
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/mu.png', 
-            width: 150, 
-            height: 150, 
-            fit: BoxFit.contain),
+            Image.asset(
+              'assets/images/mu.png',
+              width: 150,
+              height: 150,
+              fit: BoxFit.contain,
+            ),
             const SizedBox(height: 40),
 
-            LoadingAnimationWidget.progressiveDots(
-              color: AppColors.darkBlue, // Sesuaikan warna animasi
+            LoadingAnimationWidget.staggeredDotsWave(
+              color: AppColors.darkBlue,
               size: 50,
             ),
           ],
