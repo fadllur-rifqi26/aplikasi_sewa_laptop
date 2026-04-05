@@ -14,7 +14,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Berpindah ke LoginScreen setelah 3 detik
     Future.delayed(const Duration(seconds: 4), () {
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
