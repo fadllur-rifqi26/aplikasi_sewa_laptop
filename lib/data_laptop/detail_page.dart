@@ -1,6 +1,6 @@
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:flutter/material.dart';
-import 'laptop_model.dart'; // Import model jika dipisah file
+import 'laptop_model.dart'; 
 
 class DetailPage extends StatelessWidget {
   final Laptop laptop;
@@ -21,11 +21,9 @@ class DetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Foto Laptop
-            Container(
+            SizedBox(
               height: 250,
-              width: double.infinity,
-              color: Colors.white,
-              child: Image.network(laptop.imagePath, fit: BoxFit.contain),
+              child: Image.asset(laptop.imagePath, fit: BoxFit.contain),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),

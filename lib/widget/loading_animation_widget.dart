@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/mu.png',
+              'assets/images/logo.png',
               width: 150,
               height: 150,
               fit: BoxFit.contain,

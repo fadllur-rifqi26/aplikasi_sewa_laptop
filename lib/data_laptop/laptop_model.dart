@@ -2,7 +2,7 @@ class Laptop {
   final String name;
   final String specs;
   final String price;
-  final String imagePath; // Ubah ini
+  final String imagePath;
   final String description;
 
   Laptop({

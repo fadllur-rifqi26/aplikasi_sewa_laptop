@@ -9,9 +9,8 @@ class DashboardPage extends StatelessWidget {
 Widget build(BuildContext context) {
   return Theme(
     data: Theme.of(context).copyWith(
-      // Ini bagian kunci: mengganti font family untuk seluruh halaman ini
       textTheme: Theme.of(context).textTheme.apply(
-        fontFamily: 'Outfit', // Pastikan nama ini sama dengan di pubspec.yaml
+        fontFamily: 'Outfit', 
       ),
     ),
     child: Scaffold(
@@ -23,15 +22,12 @@ Widget build(BuildContext context) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              // --- HEADER ---
               _buildHeader(),
               const SizedBox(height: 24),
 
-              // --- PROMO BANNER ---
               _buildPromoBanner(),
               const SizedBox(height: 24),
 
-              // --- FILTERS ---
               _buildFilterScroll(),
               const SizedBox(height: 24),
 
@@ -41,11 +37,9 @@ Widget build(BuildContext context) {
               ),
               const SizedBox(height: 16),
 
-              // --- PRODUCT GRID ---
               _buildProductGrid(),
               const SizedBox(height: 24),
 
-              // --- ACTIVE RENTAL STATUS ---
               _buildActiveRentalStatus(),
               const SizedBox(height: 80), 
             ],
@@ -57,7 +51,6 @@ Widget build(BuildContext context) {
     );
   }
 
-  // --- WIDGET HELPER UNTUK KEBERSIHAN KODE ---
 
   Widget _buildHeader() {
     return Row(
@@ -180,7 +173,7 @@ Widget build(BuildContext context) {
       name: "ThinkPad T14 Gen 3",
       specs: "i5, 16GB, SSD 512GB",
       price: "Rp120.000",
-      imagePath: "assets/images/laptop_thinkpad.png", // Pastikan nama file & ekstensi (.png/.jpg) benar
+      imagePath: "assets/images/laptop_thinkpad.png", 
       description: "Laptop bisnis tangguh.",
     ),
     Laptop(
@@ -194,14 +187,14 @@ Widget build(BuildContext context) {
       name: "ROG Strix G15",
       specs: "i7, 16GB, SSD 1TB",
       price: "Rp200.000",
-      imagePath: "assets/images/laptop_rog.png", // Pastikan nama file & ekstensi (.png/.jpg) benar
+      imagePath: "assets/images/laptop_rog.png", 
       description: "Laptop gaming performa tinggi.",
     ),
     Laptop(
       name: "HP ProBook 450 G8",
       specs: "i5, 16GB, SSD 512GB",
       price: "Rp120.000",
-      imagePath: "assets/images/laptop_hp.png", // Pastikan nama file & ekstensi (.png/.jpg) benar
+      imagePath: "assets/images/laptop_hp.png", 
       description: "Laptop bisnis tangguh.",
     ),
   ];
@@ -212,7 +205,7 @@ Widget build(BuildContext context) {
     itemCount: listLaptop.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
   crossAxisCount: 2,
-  childAspectRatio: 0.6, // Ubah dari 0.7 ke 0.6 agar kartu lebih panjang ke bawah
+  childAspectRatio: 0.6, 
   mainAxisSpacing: 16,
   crossAxisSpacing: 16,
 ),
