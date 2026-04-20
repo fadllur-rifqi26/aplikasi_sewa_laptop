@@ -11,7 +11,10 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Detail Laptop", style: TextStyle(color: Colors.black)),
+        title: Text("Detail Laptop", style: TextStyles.body.copyWith(
+        fontSize: 20.0,
+        fontWeight: FontWeight.bold,
+        color: const Color.fromARGB(255, 0, 0, 0),)),
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
@@ -30,22 +33,22 @@ class DetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(laptop.name, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(laptop.name, style: TextStyles.body.copyWith(fontSize: 24, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(laptop.price, style: const TextStyle(fontSize: 20, color: Colors.blue, fontWeight: FontWeight.bold)),
+                  Text(laptop.price, style: TextStyles.body.copyWith(fontSize: 20, color: Colors.blue, fontWeight: FontWeight.bold)),
                   const Divider(height: 32),
-                  
-                  const Text("Spesifikasi", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+
+                  Text("Spesifikasi", style: TextStyles.body.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(laptop.specs, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                  Text(laptop.specs, style: TextStyles.body.copyWith(fontSize: 16, color: Colors.grey)),
                   const SizedBox(height: 16),
-                  
-                  const Text("Deskripsi", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+
+                  Text("Deskripsi", style: TextStyles.body.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(laptop.description, style: const TextStyle(fontSize: 14, height: 1.5)),
-                  
+                  Text(laptop.description, style: TextStyles.body.copyWith(fontSize: 14, height: 1.5)),
+
                   const SizedBox(height: 24),
-                  const Text("Pilih Durasi Sewa", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text("Pilih Durasi Sewa", style: TextStyles.body.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   // Contoh pilihan durasi sederhana
                   Row(

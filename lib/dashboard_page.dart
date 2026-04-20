@@ -85,7 +85,7 @@ Widget build(BuildContext context) {
         const SizedBox(width: 12),
         const CircleAvatar(
           radius: 18,
-          backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=a'),
+          backgroundImage: AssetImage('assets/images/pp.png'),
         ),
       ],
     );
