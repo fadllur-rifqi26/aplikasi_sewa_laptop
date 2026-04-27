@@ -1,4 +1,4 @@
-import 'package:aplikasi_jasa_sewa_laptop/login_screen.dart';
+import 'package:aplikasi_jasa_sewa_laptop/login_page/login_screen.dart';
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         // ignore: use_build_context_synchronously
         context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     });
   }
