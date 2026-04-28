@@ -2,6 +2,7 @@ import 'package:aplikasi_jasa_sewa_laptop/login_page/login_screen.dart';
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:aplikasi_jasa_sewa_laptop/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -67,20 +68,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   });
                 },
               ),
-              const SizedBox(height: 16.0),
-              CustomTextField(
-                controller: passwordController,
-                textInputType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                hint: 'Enter Password Again',
-                isObscure: isObscure,
-                hasSuffix: true,
-                onPressed: () {
-                  setState(() {
-                    isObscure = !isObscure;
-                  });
-                },
-              ),
               const SizedBox(height: 24.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -89,13 +76,42 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
+                onPressed: () async {
+                  // Ambil teks dari controller
+                  String email = emailController.text;
+                  String password = passwordController.text;
+
+                  if (email.isNotEmpty && password.isNotEmpty) {
+                    // 2. Akses Box Hive
+                    var userBox = Hive.box('userBox');
+
+                    // 3. Simpan data (Key: Email, Value: Password)
+                    // Kita gunakan email sebagai kunci unik untuk tiap user
+                    await userBox.put(email, password);
+
+                    // 4. Beri Notifikasi Sukses
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Akun berhasil dibuat! Silakan Login.'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+
+                    // 5. Arahkan ke Halaman Login
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  } else {
+                    // Validasi jika input kosong
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email dan Password wajib diisi!'),
+                      ),
+                    );
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),

@@ -3,6 +3,7 @@ import 'package:aplikasi_jasa_sewa_laptop/login_page/signup_screen.dart';
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:aplikasi_jasa_sewa_laptop/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -82,12 +83,49 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const DashboardPage(),
-                    ),
-                  );
+                  // Ambil input dari controller
+                  String email = emailController.text;
+                  String password = passwordController.text;
+
+                  // 2. Akses Box Hive yang sudah dibuka di main.dart
+                  var userBox = Hive.box('userBox');
+
+                  // 3. Ambil password yang tersimpan berdasarkan 'Key' (Email)
+                  // get(email) akan mencari value yang punya key sesuai input email
+                  String? savedPassword = userBox.get(email);
+
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email dan password tidak boleh kosong'),
+                      ),
+                    );
+                  }
+                  // 4. Validasi: Cek apakah email ada dan passwordnya cocok
+                  else if (savedPassword != null && savedPassword == password) {
+                    // Login Berhasil
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Login Berhasil!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const DashboardPage(),
+                      ),
+                    );
+                  } else {
+                    // Login Gagal (Email tidak terdaftar atau password salah)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Email atau Password salah!'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),

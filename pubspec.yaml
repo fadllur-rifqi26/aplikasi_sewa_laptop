@@ -1,6 +1,6 @@
 name: aplikasi_jasa_sewa_laptop
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0+1
 
 environment:
@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   loading_animation_widget: ^1.3.0
   cupertino_icons: ^1.0.8
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -19,24 +21,23 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets: 
-   - assets/images/login_ui0.png
-   - assets/images/login_ui1.png
-   - assets/images/mu.png
-   - assets/images/laptop_thinkpad.png
-   - assets/images/laptop_rog.png
-   - assets/images/laptop_hp.png
-   - assets/images/laptop_mac.png
-   - assets/images/rog.png
-   - assets/images/logo.png
-   - assets/images/pp.png
-   
+  assets:
+    - assets/images/login_ui0.png
+    - assets/images/login_ui1.png
+    - assets/images/mu.png
+    - assets/images/laptop_thinkpad.png
+    - assets/images/laptop_rog.png
+    - assets/images/laptop_hp.png
+    - assets/images/laptop_mac.png
+    - assets/images/rog.png
+    - assets/images/logo.png
+    - assets/images/pp.png
+    - assets/images/new_logo.png
 
-
-  fonts: 
-  - family: Outfit
-    fonts:
-      - asset: assets/fonts/Outfit-Regular.ttf
-        weight: 400
-      - asset: assets/fonts/Outfit-SemiBold.ttf
-        weight: 600
+  fonts:
+    - family: Outfit
+      fonts:
+        - asset: assets/fonts/Outfit-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Outfit-SemiBold.ttf
+          weight: 600
