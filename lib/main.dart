@@ -1,13 +1,15 @@
 import 'package:aplikasi_jasa_sewa_laptop/widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:aplikasi_jasa_sewa_laptop/database/app_db.dart'; // sesuaikan package name anda
 
-void main() async {
-  await Hive.initFlutter();
-  await Hive.openBox('userBox'); // Membuka wadah penyimpanan bernama userBox
+// Buat instance database global
+late AppDatabase database;
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  database = AppDatabase(); // Inisialisasi di sini
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

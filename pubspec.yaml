@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  drift: ^2.15.0         # Package utama Drift
+  drift_sqflite: ^2.0.0  # Penghubung Drift ke Sqflite
+  sqlite3_flutter_libs: ^0.5.20 # Menyediakan library sqlite3 yang up-to-date
   loading_animation_widget: ^1.3.0
   cupertino_icons: ^1.0.8
   hive: ^2.2.3
@@ -17,6 +20,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  drift_dev: ^2.15.0     # Code generator untuk Drift
+  build_runner: ^2.4.8
   flutter_lints: ^6.0.0
 
 flutter:

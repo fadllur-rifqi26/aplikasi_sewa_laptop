@@ -1,8 +1,11 @@
-import 'package:aplikasi_jasa_sewa_laptop/login_page/login_screen.dart';
+import 'package:aplikasi_jasa_sewa_laptop/dashboard_page.dart';
+import 'package:aplikasi_jasa_sewa_laptop/database/app_db.dart';
+import 'package:aplikasi_jasa_sewa_laptop/login_page/signup_screen.dart';
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:aplikasi_jasa_sewa_laptop/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+// 1. Import main.dart untuk memanggil variable global 'database'
+import 'package:aplikasi_jasa_sewa_laptop/main.dart'; 
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -38,10 +41,10 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset('assets/images/login_ui0.png'),
+              Image.asset('assets/images/login_ui1.png'),
               const SizedBox(height: 24.0),
               Text(
-                'Sign Up Details',
+                'Login Details',
                 style: TextStyles.title.copyWith(
                   color: AppColors.darkGrey,
                   fontSize: 20.0,
@@ -68,8 +71,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   });
                 },
               ),
+              const SizedBox(height: 8.0),
+              Text(
+                'Forgot Password?',
+                style: TextStyles.body.copyWith(color: AppColors.darkGrey),
+              ),
               const SizedBox(height: 24.0),
               ElevatedButton(
+                
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.darkBlue,
                   shape: RoundedRectangleBorder(
@@ -77,38 +86,50 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 onPressed: () async {
-                  // Ambil teks dari controller
-                  String email = emailController.text;
-                  String password = passwordController.text;
+                  // Di dalam onPressed tombol daftar signup_screen.dart
+                    await database.registerUser(
+                      UsersCompanion.insert(,
+                        email: emailController.text,
+                        password: passwordController.text, name: 'User  Baru
+                      ),
+                    );
+                  String email = emailController.text.trim();
+                  String password = passwordController.text.trim();
 
-                  if (email.isNotEmpty && password.isNotEmpty) {
-                    // 2. Akses Box Hive
-                    var userBox = Hive.box('userBox');
-
-                    // 3. Simpan data (Key: Email, Value: Password)
-                    // Kita gunakan email sebagai kunci unik untuk tiap user
-                    await userBox.put(email, password);
-
-                    // 4. Beri Notifikasi Sukses
+                  if (email.isEmpty || password.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Akun berhasil dibuat! Silakan Login.'),
+                        content: Text('Email dan password tidak boleh kosong'),
+                      ),
+                    );
+                    return; // Hentikan eksekusi jika kosong
+                  }
+
+                  // 2. GANTI HIVE DENGAN DRIFT
+                  // Memanggil query loginUser yang telah dibuat di app_db.dart
+                  final user = await database.loginUser(email, password);
+
+                  if (user != null) {
+                    // Login Berhasil (Data user ditemukan di database lokal)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Sign Up Berhasil! Selamat datang, ${user.name}'),
                         backgroundColor: Colors.green,
                       ),
                     );
 
-                    // 5. Arahkan ke Halaman Login
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const DashboardPage(),
                       ),
                     );
                   } else {
-                    // Validasi jika input kosong
+                    // Login Gagal (Email tidak cocok dengan password di database)
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Email dan Password wajib diisi!'),
+                        content: Text('Email atau Password salah!'),
+                        backgroundColor: Colors.red,
                       ),
                     );
                   }
@@ -124,7 +145,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 24.0),
             ],
           ),
         ),

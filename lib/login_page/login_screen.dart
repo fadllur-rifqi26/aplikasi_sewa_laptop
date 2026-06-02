@@ -3,7 +3,8 @@ import 'package:aplikasi_jasa_sewa_laptop/login_page/signup_screen.dart';
 import 'package:aplikasi_jasa_sewa_laptop/styles.dart';
 import 'package:aplikasi_jasa_sewa_laptop/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+// 1. Import main.dart untuk memanggil variable global 'database'
+import 'package:aplikasi_jasa_sewa_laptop/main.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -82,17 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
-                onPressed: () {
-                  // Ambil input dari controller
-                  String email = emailController.text;
-                  String password = passwordController.text;
-
-                  // 2. Akses Box Hive yang sudah dibuka di main.dart
-                  var userBox = Hive.box('userBox');
-
-                  // 3. Ambil password yang tersimpan berdasarkan 'Key' (Email)
-                  // get(email) akan mencari value yang punya key sesuai input email
-                  String? savedPassword = userBox.get(email);
+                onPressed: () async { // Tambahkan async di sini
+                  String email = emailController.text.trim();
+                  String password = passwordController.text.trim();
 
                   if (email.isEmpty || password.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -100,13 +93,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         content: Text('Email dan password tidak boleh kosong'),
                       ),
                     );
+                    return; // Hentikan eksekusi jika kosong
                   }
-                  // 4. Validasi: Cek apakah email ada dan passwordnya cocok
-                  else if (savedPassword != null && savedPassword == password) {
-                    // Login Berhasil
+
+                  // 2. GANTI HIVE DENGAN DRIFT
+                  // Memanggil query loginUser yang telah dibuat di app_db.dart
+                  final user = await database.loginUser(email, password);
+
+                  if (user != null) {
+                    // Login Berhasil (Data user ditemukan di database lokal)
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Login Berhasil!'),
+                      SnackBar(
+                        content: Text('Login Berhasil! Selamat datang, ${user.name}'),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -118,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   } else {
-                    // Login Gagal (Email tidak terdaftar atau password salah)
+                    // Login Gagal (Email tidak cocok dengan password di database)
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Email atau Password salah!'),
@@ -149,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  // Menggunakan push biasa agar jika di-back dari signup bisa kembali ke login
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const SignupScreen(),
